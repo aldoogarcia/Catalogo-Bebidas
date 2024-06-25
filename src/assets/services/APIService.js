@@ -6,5 +6,8 @@ export default {
     },
     buscarReceta({categoria,nombre}){
         return api.get(`/filter.php?c=${categoria}&i=${nombre}`)
+    },
+    buscarID(id){
+        return api.get(`/lookup.php?i=${id}`)
     }
 }

@@ -6,6 +6,7 @@ import APIService from '@/assets/services/APIService';
 export const useBebidasStore = defineStore('benidas',()=>{
     const categorias=ref([])
     const recetas=ref([])
+    const ingredientes=ref([])
     const busqueda = reactive({
         nombre: '',
         categoria:''
@@ -23,10 +24,20 @@ export const useBebidasStore = defineStore('benidas',()=>{
        recetas.value=drinks
     }
 
+    async function obtenerReceta(id){
+         const {data:{drinks}} = await APIService.buscarID(id)
+         ingredientes.value=drinks[0]
+        //  console.log(drinks[0])
+
+
+    }
+
     return{
         categorias,
         busqueda,
         obtenerRecetas,
-        recetas
+        recetas,
+        obtenerReceta,
+        ingredientes
     }
 })
