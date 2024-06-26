@@ -1,12 +1,15 @@
 import {ref,onMounted,reactive} from 'vue'
+import { useModalStore } from './modal';
 import { defineStore } from "pinia";
 import APIService from '@/assets/services/APIService';
 
 
+
 export const useBebidasStore = defineStore('benidas',()=>{
+    const moda = useModalStore()
     const categorias=ref([])
     const recetas=ref([])
-    const ingredientes=ref([])
+    const ingredientes=ref({})
     const busqueda = reactive({
         nombre: '',
         categoria:''
@@ -29,7 +32,7 @@ export const useBebidasStore = defineStore('benidas',()=>{
          ingredientes.value=drinks[0]
         //  console.log(drinks[0])
 
-
+         moda.handleSubmit()
     }
 
     return{

@@ -20,7 +20,7 @@
         </div>
 
         <div class="p-5 text-center font-extrabold border">
-            <h2 class="truncate text-lg mb-3">{{ receta.strDrink }} {{ receta.idDrink }}</h2>
+            <h2 class="truncate text-lg mb-3">{{ receta.strDrink }}</h2>
             <button 
             @click="bebidas.obtenerReceta(receta.idDrink)"
             class="block text-center py-1 px-3 w-full text-white rounded-xl bg-orange-400 hover:bg-orange-600">Ver Receta</button>
