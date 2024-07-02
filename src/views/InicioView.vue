@@ -9,9 +9,15 @@ const bebidas=useBebidasStore()
 </script>
 
 <template>
-    <h1 class="text-3xl text-left ml-10 mt-10 font-semibold ">Recetas</h1>
+    <h1 class="container text-center mx-auto font-extrabold text-6xl">Recetas</h1>
+    <br>
 
-<div class=" grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 my-10 gap-10 container">
+        <div class="text-center text-2xl mt-10 text-orange-400 mb-10" 
+    v-if="bebidas.noRecetas">
+        <p>No Hay Resultados intenta una busqueda</p>
+    </div>
+
+<div v-else class=" md:w-2/3 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 my-10 gap-10 container">
     <BebidasItem 
     
 v-for="receta in bebidas.recetas"

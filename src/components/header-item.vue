@@ -2,18 +2,34 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import {useBebidasStore} from '../stores/bebidas'
+import { useNotificacionStores } from '@/stores/notificacion';
 
 const route = useRoute();
 const store = useBebidasStore()
+const notificacion= useNotificacionStores();
 const paguinaSelect= computed(()=>route.name=='inicio' )
 
 const handleSubmit = () => {
+    if(Object.values(store.busqueda).includes("")){
+        notificacion.$patch({
+            muestra:true,
+            error:true,
+            texto: "Los campos son obligatorios"
+        })
+        setTimeout(() => {
+            notificacion.$patch({
+            muestra:false,
+            error:false,
+            texto: ""
+        })
+        }, 3000);
+    }
     store.obtenerRecetas()
 }
 </script>
 
 <template>
-<header class="bg-slate-800 w-full"
+<header class="sticky top-0 bg-slate-800 w-full"
         :class="{header:paguinaSelect}">
     <div class="mx-auto container px-5 py-16">
         <div class="mx-auto container px-5 py-5">
@@ -23,16 +39,16 @@ const handleSubmit = () => {
                         <img class="min-w-28" src="/public/img/logo.svg" alt="Icono-SVG">
                     </RouterLink>
                 </div>
-                <nav class="flex space-x-3">
+                <nav class=" text-white flex space-x-3">
                     <RouterLink
-                    class="text-white text-lg font-semibold"
+                    class=" text-lg font-semibold"
                     :to="{name:'inicio'}"
                     active-class="text-orange-400"
                     >
                     Inicio
                     </RouterLink>
                     <RouterLink
-                    class="text-white text-lg font-semibold"
+                    class=" text-lg font-semibold"
                     :to="{name:'favoritos'}"
                     active-class="text-orange-400 "
                     >

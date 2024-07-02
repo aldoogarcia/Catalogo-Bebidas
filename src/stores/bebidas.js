@@ -1,11 +1,11 @@
-import {ref,onMounted,reactive} from 'vue'
+import {ref,onMounted,reactive, computed} from 'vue'
 import { useModalStore } from './modal';
 import { defineStore } from "pinia";
 import APIService from '@/assets/services/APIService';
 
 
 
-export const useBebidasStore = defineStore('benidas',()=>{
+export const useBebidasStore = defineStore('bebidas',()=>{
     const moda = useModalStore()
     const categorias=ref([])
     const recetas=ref([])
@@ -31,9 +31,10 @@ export const useBebidasStore = defineStore('benidas',()=>{
          const {data:{drinks}} = await APIService.buscarID(id)
          ingredientes.value=drinks[0]
         //  console.log(drinks[0])
-
          moda.handleSubmit()
     }
+
+    const noRecetas= computed(()=> recetas.value==0)
 
     return{
         categorias,
@@ -41,6 +42,7 @@ export const useBebidasStore = defineStore('benidas',()=>{
         obtenerRecetas,
         recetas,
         obtenerReceta,
-        ingredientes
+        ingredientes,
+        noRecetas
     }
 })

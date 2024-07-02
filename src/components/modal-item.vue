@@ -3,9 +3,33 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 
 import {useModalStore} from '../stores/modal'
 import { useBebidasStore } from '@/stores/bebidas';
+import { useFavoritosStore } from '@/stores/favoritos';
 
 const moda= useModalStore()
 const bebid = useBebidasStore()
+const favoritos = useFavoritosStore()
+
+const muestraIngredientesExistentes=()=>{
+  
+  const ingrdientesDiv= document.createElement('DIV')
+
+  for(let i=1;i<=15;i++){
+    if(bebid.ingredientes[`strIngredient${i}`]){
+      const ingredientes= bebid.ingredientes[`strIngredient${i}`]
+      const cantidad = bebid.ingredientes[`strMeasure${i}`]
+      
+
+      const parrafo = document.createElement('P')
+      parrafo.classList.add('text-lg')
+      parrafo.textContent=`${ingredientes}: ${cantidad}`
+
+      ingrdientesDiv.appendChild(parrafo)
+
+    }
+  }
+
+  return ingrdientesDiv
+}
 
 
 </script>
@@ -28,18 +52,37 @@ const bebid = useBebidasStore()
                     </DialogTitle>
 
                     <img 
-                    class="rounded-full"
+                    class="rounded-full w-72 mx-auto"
                     :src="bebid.ingredientes.strDrinkThumb" alt="img bebida">
 
+                    <DialogTitle  class="text-2xl font-extrabold my-5">
+                      ingredientes y Cantidades
+                    </DialogTitle>
+                    <div v-html="muestraIngredientesExistentes().outerHTML"></div>
 
+                    <DialogTitle  class="text-2xl font-extrabold my-5">
+                      Intrucciones de Bebida
+                    </DialogTitle>
+
+                    <div>
+                      <p>
+                        {{ bebid.ingredientes.strInstructionsES == null ? bebid.ingredientes.strInstructions : bebid.ingredientes.strInstructionsES}}
+                      </p>
+                    </div>
 
                   </div>
                 </div>
-                <div class="mt-5 sm:mt-6 flex justify-between gap-4">
+                <div class="mt-5 sm:mt-6 flex justify-between gap-10">
                   <button
-                  class="w-full p-1 bg-slate-400"
+                  class="w-full p-1 bg-slate-400 text-white"
                   @click="moda.handleSubmit">
                     Cerrar
+                  </button>
+
+                  <button
+                  class="w-full p-1 bg-orange-400 text-white"
+                  @click="favoritos.handleFavoritos()"  >
+                    {{ moda.textBoton }}
                   </button>
                 </div> 
               </DialogPanel>
